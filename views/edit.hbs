@@ -1,0 +1,29 @@
+      <div class="site-wrap">
+        <div class="site-section">
+            <form action="/edit/:id" method="post">
+                {{!-- {{ locations.id_location}} --}}
+                <div>
+                    <label for="title">Title :</label>
+                    <input type="text" id="title" name="location_title" placeholder="{{location.title}}">
+                </div>
+                <div>
+                    <label for="descr">Description :</label>
+                    <input type="text" id="descr" name="location_descr" placeholder="{{location.description}}">
+                </div>
+                <div>
+                    <label for="capacity">Number of People :</label>
+                    <input id="text" name="capacity" value="{{location.capacity}}">
+                </div>
+                <div>
+                    <label for="categorie">Categories :</label>
+                    <SELECT name="cat">
+                        {{# each categories }}
+                        <OPTION>{{this.name}}</OPTION>
+                        {{/each}}
+                    </SELECT>
+                </div>
+                <button type="button" class="btn btn-warning"><a href="/views/edit.hbs/{{this.id_location}}">EDIT</a></button>
+
+                {{!-- {{/each}} --}}
+            </form>
+        </div>
