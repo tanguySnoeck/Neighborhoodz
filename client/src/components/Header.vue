@@ -15,7 +15,9 @@
         <div class="container">
             <div class="row align-items-center">
             <div class="col-6 col-xl-2">
-                <h1 class="mb-0"><a href="index.hbs" class="text-black h2 mb-0">Neighborhoodz</a></h1>
+                <h1 class="mb-0">
+                    <router-link to="/" class="text-black h2 mb-0"> Neighborhoodz </router-link>
+                </h1>
             </div>
             <div class="col-10 col-md-8 d-none d-xl-block">
                 <nav class="site-navigation position-relative text-right text-lg-center" role="navigation">
@@ -33,7 +35,8 @@
                     <!-- MES AUTRES PAGES  -->
                     <li><a href="/about.html">About</a></li>
                     <li><a href="/contact.html">Contact</a></li>
-                    <li><a href="/admin">ADMIN</a></li>
+                    <!-- <li><a href="/admin">ADMIN</a></li> -->
+                    <li><router-link to="/Admin">ADMIN</router-link></li>
                 </ul>
                 </nav>
             </div>

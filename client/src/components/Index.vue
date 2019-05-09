@@ -1,7 +1,6 @@
 <template>
 <!-- PRÉSENTATONS DES LOCATIONS  -->
   <div>
-    <Header></Header>
     <div class="site-section">
       <div class="container">
         <div class="row justify-content-center mb-5">
@@ -10,9 +9,9 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4"  v-for="location in locations" v-bind:key="location.id_location">
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" v-for="location in locations" v-bind:key="location.id_location">
             <a :href="'/' + location.id_location" class="unit-1 text-center">
-              <img :src="'../assets/images/' + location.image + '.jpg'" :alt="location.title" class="img-fluid" style="max-width: 345px; max-height: 230px;">
+              <img :src="getImg(location.image + '.jpg')" :alt="location.title" class="img-fluid" style="max-width: 345px; max-height: 230px;">
               <div class="unit-1-text">
                 <h3 class="unit-1-heading">{{location.title}}</h3>
                 <strong class="text-white mb-2 d-block">{{location.description}}</strong>
@@ -80,7 +79,7 @@
                   <img src="../assets/images/louis.jpg" alt="Image" class="img-md-fluid">
                 </div>
                 <div class="overlap-left col-lg-6 bg-white p-md-5 align-self-center">
-                  <p class="text-black lead">I booked a basketball court in Boistfort for a small tournament with friends and it was made available to us very quickly when we arrived. Thank you Neighborhoodz!</p>
+                  <p class="text-black lead">I booked a basketball court àin Boistfort for a small tournament with friends and it was made available to us very quickly when we arrived. Thank you Neighborhoodz!</p>
                   <p class="">&mdash; <em>Louis Ryckmans</em>, Lessee</p>
                 </div>
               </div>
@@ -90,15 +89,11 @@
         </div>
       </div>
     </div>
-
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import Header from './Header.vue'
-import Footer from './Footer.vue'
 
 export default {
   data () {
@@ -116,11 +111,10 @@ export default {
       }, err => {
         console.log(err)
       })
+    },
+    getImg (img) {
+      return require('../assets/images/' + img)
     }
-  },
-  components: {
-    Header,
-    Footer
   }
 }
 </script>

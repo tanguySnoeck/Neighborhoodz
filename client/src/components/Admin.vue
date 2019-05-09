@@ -11,17 +11,17 @@
             <div class="row">
                 <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" v-for="location in locations" v-bind:key="location.id_location">
                     <a :href="'/' + location.id_location" class="unit-1 text-center">
-                        <img :src="'img/' + location.image + '.jpg'" :alt="location.title" class="img-fluid" style="max-width: 345px; max-height: 230px;">
+                        <img :src="getImg(location.image + '.jpg')" :alt="location.title" class="img-fluid" style="max-width: 345px; max-height: 230px;">
 
                         <div class="unit-1-text">
                             <h3 class="unit-1-heading">{{location.title}}</h3>
                             <strong class="text-white mb-2 d-block">{{location.description}}</strong>
-                            <p class="unit-1-heading"><img src="img/favicon.ico" alt="placeholder" style="width: 30px; height:40x">{{location.town}}</p>
+                            <p class="unit-1-heading"><img src="favicon" alt="placeholder" style="width: 30px; height:40x">{{location.town}}</p>
                         </div>
                     </a>
                     <!-- <button type="button" class="btn btn-default"><a href="admin/edit/{{this.id_location}}">EDIT</a></button> -->
-                    <a :href="'admin/edit/' + this.id_location" class="btn btn-warning" role="button">EDIT</a>
-                    <a :href="'admin/remove/' + this.id_location" class="btn btn-danger" role="button">REMOVE</a>
+                    <a :href="'admin/edit/' + location.id_location" class="btn btn-warning" role="button">EDIT</a>
+                    <a :href="'admin/remove/' + location.id_location" class="btn btn-danger" role="button">REMOVE</a>
                     <!-- <button type="button" class="btn btn-default"><a href="/admin/remove/{{this.id_location}}">DELETE</a></button>   -->
                 </div>
             </div>
@@ -116,10 +116,14 @@ export default {
   methods: {
     getLocations () {
       axios.get('/api/location').then(result => {
+        console.log(result.data)
         this.locations = result.data
       }, err => {
         console.log(err)
       })
+    },
+    getImg (img) {
+      return require('../assets/images/' + img)
     }
   },
   name: 'Admin'

@@ -16,6 +16,8 @@ app.set('views', path.join(__dirname, 'views'));
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
 
+app.disable('etag')
+
 // AFFICHER UNE INCONE A CÔTÉ DU TITLE
 app.use(favicon(path.join(__dirname, 'public', 'img/favicon.ico')));
 app.use(logger('dev'));
