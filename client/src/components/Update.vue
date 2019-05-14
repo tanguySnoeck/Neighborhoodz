@@ -52,8 +52,8 @@ export default {
     this.getCategories()
     this.location_id = this.$route.params.location_id
 
-    if (this.location_id !== undefined) {
-      axios.get('/api/location/' + this.location_id).then(result => {
+    if (this.location_id !== undefined) { // Ca veut dire que je suis en mode "edit"
+      axios.get('/api/location/' + this.location_id).then(result => { // Du coup je remplit les champs avec les valeurs de la location qu'on veut modifier
         this.title = result.data.title
         this.location_description = result.data.location_description
         this.town = result.data.town
@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     submit () {
-      const dataToSend = {
+      const dataToSend = { // Les données à envoyer au b/e
         title: this.title,
         location_description: this.location_description,
         town: this.town,
@@ -76,27 +76,27 @@ export default {
 
       for (let i = 0; i < this.categories.length; i++) {
         if (this.categories[i].cat_name === this.category) {
-          dataToSend.cat_id = this.categories[i].id_category
+          dataToSend.cat_id = this.categories[i].id_category // Je récupère l'id de la category à laquelle je veux associer la location
         }
       }
 
-      if (this.location_id !== undefined) {
-        axios.put('/api/location/' + this.location_id, dataToSend).then(result => {
+      if (this.location_id !== undefined) { // Je suis en mode "add"
+        axios.put('/api/location/' + this.location_id, dataToSend).then(result => { //Je modifie une location
           console.log(result)
         }, err => {
           console.log(err)
         })
       } else {
-        axios.post('/api/location', dataToSend).then(result => {
+        axios.post('/api/location', dataToSend).then(result => { // J'ajoute une location
           console.log(result)
         }, err => {
           console.log(err)
         })
       }
     },
-    getCategories () {
+    getCategories () { // Je récupère toutes les catégories
       axios.get('/api/category').then(result => {
-        this.categories = result.data
+        this.categories = result.data // Ca permet de charger automatiquement le select
       }, err => {
         console.log(err)
       })

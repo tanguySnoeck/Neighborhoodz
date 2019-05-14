@@ -102,7 +102,7 @@ export default {
       locations: []
     }
   },
-  mounted () {
+  mounted () { // Est appelé lorsque la vue est prête à être affiché
     this.getLocations()
   },
   methods: {

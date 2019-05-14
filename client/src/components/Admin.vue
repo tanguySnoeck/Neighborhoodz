@@ -116,21 +116,21 @@ export default {
     this.getLocations()
   },
   methods: {
-    getLocations () {
+    getLocations () { // Je récupère toutes les locations
       axios.get('/api/location').then(result => {
         this.locations = result.data
       }, err => {
         console.log(err)
       })
     },
-    getImg (img) {
+    getImg (img) { // Nécessaire pcq webpack est bizarre
       return require('../assets/images/' + img)
     },
-    remove (locationId) {
+    remove (locationId) { // supprime une location
       axios.delete('/api/location/' + locationId).then(result => {
         for (let i = 0; i < this.locations.length; i++) {
           if (this.locations[i].id_location === locationId) {
-            this.locations.splice(i, 1)
+            this.locations.splice(i, 1) // Je retire dynamiquement la location de la vue
           }
         }
       }, err => {

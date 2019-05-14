@@ -10,13 +10,13 @@ function getLocationFromId(req, res) {
 
 async function addLocation(req, res) {
     const cat_id = req.body.cat_id
-    delete req.body['cat_id']
+    delete req.body['cat_id'] // Je supprime l'attribut 'cat_id' de l'objet req.body
     
     const location = await LocationModel.build(req.body);
     const locationModel = new LocationModel()
     
-    locationModel.addLocation(location).then(result => {
-        locationModel.addCategory(result.id_location, cat_id).then(result => {
+    locationModel.addLocation(location).then(result => {// J'ajoute une location
+        locationModel.addCategory(result.id_location, cat_id).then(result => { // J'ajoute la catégorie associée
           res.json(result)
         }, err => {
           console.log(err)
@@ -40,8 +40,8 @@ function deleteLocation(req, res) {
     const locationModel = new LocationModel()
     const location_id = req.params.id
 
-    locationModel.deleteCategory(location_id).then(result => {
-      locationModel.deleteLocation(location_id).then(result => {
+    locationModel.deleteCategory(location_id).then(result => { // Je supprime d'abord l'association catégorie - location
+      locationModel.deleteLocation(location_id).then(result => { // Puis je supprime la location elle-même 
         res.json(result)
       }, err => {
         res.status(400).json(err)
