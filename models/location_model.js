@@ -46,11 +46,21 @@ LocationModel.prototype.updateLocation = function(id, changes) {
     });
 }
 
+LocationModel.prototype.deleteCategory = function(location_id) {
+    const query = 'DELETE FROM location_category WHERE id_location = ?'
+    return sequelize.query(query, {
+      raw: true,
+      replacements: [location_id],
+      type: Sequelize.QueryTypes.DELETE
+    })
+}
+
 LocationModel.prototype.addCategory = function(location_id, category_id) {
-    const query = 'INSERT INTO location_category SET ?, ?';
-    sequelize.query(query, {
+    const query = 'INSERT INTO location_category VALUES (?, ?)';
+    return sequelize.query(query, {
         raw: true,
-        replacements: []
+        replacements: [location_id, category_id],
+        type: Sequelize.QueryTypes.INSERT
     })
 }
 

@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-md-7 text-center">
-                    <h2 class="font-weight-light text-black">Our test are here for you</h2>
+                    <h2 class="font-weight-light text-black">Our locations are here for you</h2>
                 </div>
             </div>
             <div class="row">
@@ -16,17 +16,18 @@
                         <div class="unit-1-text">
                             <h3 class="unit-1-heading">{{location.title}}</h3>
                             <strong class="text-white mb-2 d-block">{{location.description}}</strong>
-                            <p class="unit-1-heading"><img src="favicon" alt="placeholder" style="width: 30px; height:40x">{{location.town}}</p>
+                            <p class="unit-1-heading">
+                                <!-- <img src="favicon" alt="placeholder" style="width: 30px; height:40x"> -->
+                                {{location.town}}
+                            </p>
                         </div>
                     </a>
-                    <!-- <button type="button" class="btn btn-default"><a href="admin/edit/{{this.id_location}}">EDIT</a></button> -->
-                    <a :href="'admin/edit/' + location.id_location" class="btn btn-warning" role="button">EDIT</a>
-                    <a :href="'admin/remove/' + location.id_location" class="btn btn-danger" role="button">REMOVE</a>
-                    <!-- <button type="button" class="btn btn-default"><a href="/admin/remove/{{this.id_location}}">DELETE</a></button>   -->
+                    <router-link :to="{name: 'Edit', 'params': {location_id: location.id_location}}" class="btn btn-warning">Edit</router-link>
+                    <button class="btn btn-danger" v-on:click="remove(location.id_location)"> Remove</button>
                 </div>
             </div>
             <div>
-                <button type="button" class="btn btn-primary">ADD A LOCATION</button>
+                <router-link :to="'add'" class="btn btn-primary"> ADD A LOCATION </router-link>
             </div>
 
 <!-- BULLET POINTS NEIGHBORHOODZ  -->
@@ -104,6 +105,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   data () {
     return {
@@ -116,7 +118,6 @@ export default {
   methods: {
     getLocations () {
       axios.get('/api/location').then(result => {
-        console.log(result.data)
         this.locations = result.data
       }, err => {
         console.log(err)
@@ -124,6 +125,17 @@ export default {
     },
     getImg (img) {
       return require('../assets/images/' + img)
+    },
+    remove (locationId) {
+      axios.delete('/api/location/' + locationId).then(result => {
+        for (let i = 0; i < this.locations.length; i++) {
+          if (this.locations[i].id_location === locationId) {
+            this.locations.splice(i, 1)
+          }
+        }
+      }, err => {
+        console.log(err)
+      })
     }
   },
   name: 'Admin'

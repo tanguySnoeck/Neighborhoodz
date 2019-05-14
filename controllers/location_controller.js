@@ -9,13 +9,23 @@ function getLocationFromId(req, res) {
 }
 
 async function addLocation(req, res) {
+    const cat_id = req.body.cat_id
+    delete req.body['cat_id']
+    
     const location = await LocationModel.build(req.body);
-
-    new LocationModel().addLocation(location).then(results => {
-        res.json(results);
+    const locationModel = new LocationModel()
+    
+    locationModel.addLocation(location).then(result => {
+        locationModel.addCategory(result.id_location, cat_id).then(result => {
+          res.json(result)
+        }, err => {
+          console.log(err)
+          res.status(400).json(err);
+        })
     }, err => {
         res.status(400).json(err);
     })
+    
 }
 
 function getAllLocations(req, res) {
@@ -27,10 +37,18 @@ function getAllLocations(req, res) {
 }
 
 function deleteLocation(req, res) {
-    new LocationModel().deleteLocation(req.params.id).then(results => {
-        res.json(results);
+    const locationModel = new LocationModel()
+    const location_id = req.params.id
+
+    locationModel.deleteCategory(location_id).then(result => {
+      locationModel.deleteLocation(location_id).then(result => {
+        res.json(result)
+      }, err => {
+        res.status(400).json(err)
+      })
     }, err => {
-        res.status(400).json(err);
+      console.log(err)
+      res.status(400).json(err)
     })
 }
 

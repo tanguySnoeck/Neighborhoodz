@@ -26,17 +26,15 @@
                     <a href="/">Locations</a>
                     <ul class="dropdown">
                     <!-- À REMPLIR QUAND AVEC UNE BOUCLE DE MES CATÉGORIES -->
-                        <li><a href="#">Catégorie location 1</a></li>
-                        <li><a href="#">Catégorie location 2</a></li>
-                        <li><a href="#">Catégorie location 3</a></li>
-                        <li><a href="#">Catégorie location 4</a></li>
+                        <li v-for="category in categories" v-bind:key="category.id_category">
+                          <a href="#">{{category.cat_name}}</a>
+                        </li>
                     </ul>
                     </li>
                     <!-- MES AUTRES PAGES  -->
                     <li><a href="/about.html">About</a></li>
                     <li><a href="/contact.html">Contact</a></li>
-                    <!-- <li><a href="/admin">ADMIN</a></li> -->
-                    <li><router-link to="/Admin">ADMIN</router-link></li>
+                    <li><router-link to="/admin">ADMIN</router-link></li>
                 </ul>
                 </nav>
             </div>
@@ -59,7 +57,27 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  data () {
+    return {
+      categories: []
+    }
+  },
+  mounted () {
+    this.getCategories()
+  },
+  methods: {
+    getCategories () {
+      axios.get('/api/category').then(result => {
+        this.categories = result.data
+        console.log(result)
+      }, err => {
+        console.log(err)
+      })
+    }
+  }
 }
 </script>

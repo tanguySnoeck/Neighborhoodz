@@ -15,7 +15,10 @@
               <div class="unit-1-text">
                 <h3 class="unit-1-heading">{{location.title}}</h3>
                 <strong class="text-white mb-2 d-block">{{location.description}}</strong>
-                <p class="unit-1-heading"><img src="favicon" alt="placeholder" style="width: 30px; height:40x">{{location.town}}</p>
+                <p class="unit-1-heading">
+                  <!-- <img src="favicon" alt="placeholder" style="width: 30px; height:40x"> -->
+                  {{location.town}}
+                  </p>
               </div>
             </a>
           </div>
@@ -60,8 +63,6 @@
     </div>
 
   <!-- TÉMOIGNAGE  -->
-
-    <!-- {{!-- <div class="site-section block-13 bg-light"> --}} -->
 
     <div class="container">
         <div class="row justify-content-center mb-5">
