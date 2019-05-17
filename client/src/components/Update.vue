@@ -80,13 +80,13 @@ export default {
         }
       }
 
-      if (this.location_id !== undefined) { // Je suis en mode "add"
-        axios.put('/api/location/' + this.location_id, dataToSend).then(result => { //Je modifie une location
+      if (this.location_id !== undefined) { // Je suis en mode "edit"
+        axios.put('/api/location/' + this.location_id, dataToSend).then(result => { // Je modifie une location
           console.log(result)
         }, err => {
           console.log(err)
         })
-      } else {
+      } else { // Je suis en mode "add"
         axios.post('/api/location', dataToSend).then(result => { // J'ajoute une location
           console.log(result)
         }, err => {

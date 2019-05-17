@@ -64,31 +64,6 @@
 
   <!-- TÉMOIGNAGE  -->
 
-    <div class="container">
-        <div class="row justify-content-center mb-5">
-          <div class="col-md-7">
-            <h2 class="font-weight-light text-black text-center">Testimonials</h2>
-          </div>
-        </div>
-
-        <div class="nonloop-block-13 owl-carousel">
-
-          <div class="item">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-6 mb-5">
-                  <img src="../assets/images/louis.jpg" alt="Image" class="img-md-fluid">
-                </div>
-                <div class="overlap-left col-lg-6 bg-white p-md-5 align-self-center">
-                  <p class="text-black lead">I booked a basketball court àin Boistfort for a small tournament with friends and it was made available to us very quickly when we arrived. Thank you Neighborhoodz!</p>
-                  <p class="">&mdash; <em>Louis Ryckmans</em>, Lessee</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>

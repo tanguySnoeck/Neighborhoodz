@@ -48,6 +48,7 @@ LocationModel.prototype.updateLocation = function(id, changes) {
 
 LocationModel.prototype.deleteCategory = function(location_id) { // Supprime l'association catégorie - location
     const query = 'DELETE FROM location_category WHERE id_location = ?'
+    
     return sequelize.query(query, {
       raw: true,
       replacements: [location_id],
