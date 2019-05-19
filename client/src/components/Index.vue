@@ -84,6 +84,7 @@ export default {
     getLocations () {
       axios.get('/api/location').then(result => {
         this.locations = result.data
+        console.log(result.data)
       }, err => {
         console.log(err)
       })

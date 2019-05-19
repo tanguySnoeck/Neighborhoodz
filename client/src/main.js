@@ -16,6 +16,7 @@ require('./assets/css/bootstrap-datepicker.css')
 require('./assets/fonts/flaticon/font/flaticon.css')
 require('./assets/css/aos.css')
 require('./assets/css/style.css')
+require('./assets/css/vue-multiselect.min.css')
 
 // require('./assets/js/jquery-3.3.1.min.js')
 // require('./assets/js/jquery-migrate-3.0.1.min.js')
