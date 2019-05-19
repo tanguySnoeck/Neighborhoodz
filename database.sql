@@ -17,7 +17,7 @@ CREATE TABLE neighborhoodz.categories (
 );
 
 CREATE TABLE neighborhoodz.location_category (
-	id_location INTEGER NOT NULL,
+	  id_location INTEGER NOT NULL,
     id_category INTEGER NOT NULL,
     FOREIGN KEY (id_category) REFERENCES categories (id_category),
     FOREIGN KEY (id_location) REFERENCES locations (id_location),

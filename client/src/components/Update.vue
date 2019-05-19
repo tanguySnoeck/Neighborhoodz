@@ -21,10 +21,10 @@
             <input id="capacity" v-model="capacity" type="number" name="capacity" class="form-control">
         </div>
         <div class="form-group">
-          <label for="categories">Category</label>
-          <select v-model="category" name="category" class="form-control">
-            <option v-for="category in categories" v-bind:key="category.id_cat">{{category.cat_name}}</option>
-          </select>
+          <label class="typo__label">Categories</label>
+          <multiselect v-model="selected_categories" :options="categories" :custom-label="styleLabel" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some" label="name" track-by="cat_name" :preselect-first="true">
+            <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span></template>
+          </multiselect>
         </div>
         <div>
             <button type="submit" value="Submit" class="btn btn-primary">Submit</button>
@@ -33,8 +33,12 @@
 </template>
 <script>
 import axios from 'axios'
+import Multiselect from 'vue-multiselect'
 
 export default {
+  components: {
+    Multiselect
+  },
   name: 'Update',
   data () {
     return {
@@ -44,7 +48,7 @@ export default {
       capacity: '',
       image: '',
       location_id: '',
-      category: '',
+      selected_categories: [],
       categories: []
     }
   },
@@ -65,19 +69,17 @@ export default {
     }
   },
   methods: {
+    styleLabel ({cat_name}) {
+      return cat_name
+    },
     submit () {
       const dataToSend = { // Les données à envoyer au b/e
         title: this.title,
         location_description: this.location_description,
         town: this.town,
         capacity: this.capacity,
-        image: this.image
-      }
-
-      for (let i = 0; i < this.categories.length; i++) {
-        if (this.categories[i].cat_name === this.category) {
-          dataToSend.cat_id = this.categories[i].id_category // Je récupère l'id de la category à laquelle je veux associer la location
-        }
+        image: this.image,
+        categories: this.selected_categories.map(cat => cat.id_category)
       }
 
       if (this.location_id !== undefined) { // Je suis en mode "edit"
@@ -97,6 +99,7 @@ export default {
     getCategories () { // Je récupère toutes les catégories
       axios.get('/api/category').then(result => {
         this.categories = result.data // Ca permet de charger automatiquement le select
+        console.log(result.data)
       }, err => {
         console.log(err)
       })

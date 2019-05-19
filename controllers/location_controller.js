@@ -1,4 +1,5 @@
 const LocationModel = require('../models/location_model');
+const LocationCategoryModel = require('../models/location-category_model')
 
 function getLocationFromId(req, res) {
     new LocationModel().getLocation(req.params.id).then(results => {
@@ -9,23 +10,29 @@ function getLocationFromId(req, res) {
 }
 
 async function addLocation(req, res) {
-    const cat_id = req.body.cat_id
-    delete req.body['cat_id'] // Je supprime l'attribut 'cat_id' de l'objet req.body
+    const categories = req.body.categories
+    delete req.body['categories'] // Je supprime l'attribut 'cat_id' de l'objet req.body
+    
+    const locationModel = new LocationModel()
+    const locationCategoryModel = new LocationCategoryModel()
     
     const location = await LocationModel.build(req.body);
-    const locationModel = new LocationModel()
-    
-    locationModel.addLocation(location).then(result => {// J'ajoute une location
-        locationModel.addCategory(result.id_location, cat_id).then(result => { // J'ajoute la catégorie associée
-          res.json(result)
-        }, err => {
-          console.log(err)
-          res.status(400).json(err);
+
+    locationModel.addLocation(location).then(async result => {
+      const location_id = result.id_location 
+
+      for (let i = 0; i < categories.length; i++) {
+        const location_category = await LocationCategoryModel.build({
+          id_location: location_id,
+          id_category: categories[i]
         })
+  
+        await locationCategoryModel.add(location_category)
+      }
     }, err => {
-        res.status(400).json(err);
+      console.log(err)
+      res.status(400).json(err)
     })
-    
 }
 
 function getAllLocations(req, res) {
@@ -52,11 +59,34 @@ function deleteLocation(req, res) {
     })
 }
 
-function updateLocation(req, res) {
-    new LocationModel().updateLocation(req.params.id, req.body).then(results => {
-        res.json(results);
+async function updateLocation(req, res) {
+    const locationModel = new LocationModel()
+    const locationCategoryModel = new LocationCategoryModel()
+
+    const categories = req.body.categories
+    const location_id = req.params.id
+    
+    await locationCategoryModel.delete(location_id)
+
+    for (let i = 0; i < categories.length; i++) {
+      try {
+        const location_category = await LocationCategoryModel.build({
+            id_location: location_id,
+            id_category: categories[i]
+        })
+        await locationCategoryModel.add(location_category).catch(err => { throw err })
+      } catch (err) {
+        console.log(err)
+        res.status(400).json(err)
+        return
+      }
+    }
+    
+    locationModel.updateLocation(location_id, req.body).then(result => {
+      res.json(result)
     }, err => {
-        res.status(400).json(err);
+      console.log(err)
+      res.status(400).json(err)
     })
 }
 
