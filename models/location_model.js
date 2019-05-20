@@ -46,33 +46,4 @@ LocationModel.prototype.updateLocation = function(id, changes) {
     });
 }
 
-LocationModel.prototype.deleteCategory = function(location_id) { // Supprime l'association catégorie - location
-    const query = 'DELETE FROM location_category WHERE id_location = ?'
-    
-    return sequelize.query(query, {
-      raw: true,
-      replacements: [location_id],
-      type: Sequelize.QueryTypes.DELETE
-    })
-}
-
-LocationModel.prototype.updateCategory = function(location_id , category_id) {
-  const query = 'UPDATE location_category SET id_category = ? WHERE id_location = ?'
-  
-  return sequelize.query(query, {
-    raw: true,
-    replacements: [category_id, location_id],
-    type: Sequelize.QueryTypes.UPDATE
-  })
-}
-
-LocationModel.prototype.addCategory = function(location_id, category_id) { // Associe la location à la catégorie
-    const query = 'INSERT INTO location_category VALUES (?, ?)';
-    return sequelize.query(query, {
-        raw: true,
-        replacements: [location_id, category_id],
-        type: Sequelize.QueryTypes.INSERT
-    })
-}
-
 module.exports = LocationModel;

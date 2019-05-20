@@ -45,9 +45,10 @@ function getAllLocations(req, res) {
 
 function deleteLocation(req, res) {
     const locationModel = new LocationModel()
+    const locationCategoryModel = new LocationCategoryModel()
     const location_id = req.params.id
 
-    locationModel.deleteCategory(location_id).then(result => { // Je supprime d'abord l'association catégorie - location
+    locationCategoryModel.delete(location_id).then(result => { // Je supprime d'abord l'association catégorie - location
       locationModel.deleteLocation(location_id).then(result => { // Puis je supprime la location elle-même 
         res.json(result)
       }, err => {
